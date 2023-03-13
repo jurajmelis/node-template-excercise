@@ -116,3 +116,6 @@ dist
 
 # IDE - VSCode
 .vscode/*
+
+.env
+.env.test
