@@ -59,6 +59,7 @@ export class FarmsService {
       .createQueryBuilder("farm")
       .leftJoinAndSelect("farm.user", "user")
       .orderBy("name", "ASC")
+      .addOrderBy("user.updatedAt")
     outliers ? query.where("yield < (select avg(yield)*0.3 from farm) ") : query.where("yield > (select avg(yield)*0.3 from farm) ") 
 
     const farms: Farm[] = await query.getMany();

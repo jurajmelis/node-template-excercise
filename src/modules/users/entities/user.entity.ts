@@ -31,6 +31,6 @@ export class User {
       }
     }
   })
-public coordinates: string;
+  public coordinates: string;
 }
 

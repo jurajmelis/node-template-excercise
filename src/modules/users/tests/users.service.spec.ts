@@ -60,9 +60,7 @@ describe("UsersController", () => {
 
     it("should get user by provided param", async () => {
       const user = await usersService.createUser(createUserDto);
-      console.log(user);
       const foundUser = await usersService.findOneBy({ email: user?.email });
-      console.log(foundUser);
       expect(foundUser).toMatchObject({ ...user });
     });
 

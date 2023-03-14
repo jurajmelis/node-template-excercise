@@ -3,7 +3,7 @@ import { Response } from "express";
 import http from "http";
 import dataSource from "orm/orm.config";
 import { setupServer } from "./server/server";
-//import * as excercise from "./exercise/small-code-exercise";
+/* import * as excercise from "./exercise/small-code-exercise"; */
 
 async function bootstrap(): Promise<http.Server> {
   const app = setupServer();
