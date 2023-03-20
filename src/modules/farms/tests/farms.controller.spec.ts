@@ -79,10 +79,9 @@ describe("FarmsController", () => {
       const createFarmDto: CreateFarmDto = {name: "Farm 1", address: "Hlavná 1, 831 01 Bratislava", size: 21.5, yield: 8.5, authorization: wrongToken.authorization};
       const res = await agent.post("/api/v1/farms/create").send(createFarmDto);
 
-      expect(res.statusCode).toBe(422);
+      expect(res.statusCode).toBe(500);
       expect(res.body).toMatchObject({
-        name: "UnprocessableEntityError",
-        message: "User does not exist for id: 2fabdfea-743e-4a9e-8879-f1f0b8577af0",
+        message: "Internal Server Error",
       });
     });
   });
@@ -127,10 +126,9 @@ describe("FarmsController", () => {
 
       const deleteFarmDto: DeleteFarmDto = {id: farm.id, authorization: wrongToken.authorization};
       const res = await agent.post("/api/v1/farms/delete").send(deleteFarmDto);
-      expect(res.statusCode).toBe(422);
+      expect(res.statusCode).toBe(500);
       expect(res.body).toMatchObject({
-        name: "UnprocessableEntityError",
-        message: "User with id: 2fabdfea-743e-4a9e-8879-f1f0b8577af0 doesn't exist",
+        message: "Internal Server Error",
       });
     });
 

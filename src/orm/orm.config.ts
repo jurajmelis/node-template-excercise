@@ -12,9 +12,7 @@ const options: DataSourceOptions & SeederOptions =  {
  username: config.DB_USERNAME,
  password: config.DB_PASSWORD,
  database: config.DB_NAME,
- seeds: ["src/database/seeds/**/*{.ts,.js}"],
- factories: ["src/database/factories/**/*{.ts,.js}"]
+ seeds: ["src/database/seeds/main.seeder.ts"],
+ factories: ["src/database/factories/*{.ts,.js}"]
 };
-
-
 export default new DataSource(options);

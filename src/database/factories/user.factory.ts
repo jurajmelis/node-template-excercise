@@ -2,7 +2,7 @@
   import { User } from "modules/users/entities/user.entity";
   import { Faker } from "@faker-js/faker";
 
-  export default setSeederFactory(User, (faker: Faker ) => {
+  export default setSeederFactory(User, (faker: Faker) => {
       const user = new User();
       user.email = faker.internet.email(),
       user.hashedPassword = faker.internet.password(),
