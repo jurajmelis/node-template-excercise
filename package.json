@@ -15,8 +15,9 @@
     "migration:revert": "npm run typeorm migration:revert",
     "migration:create": "typeorm migration:create ./src/modules/$npm_config_path/migrations/$npm_config_name",
     "prepare": "husky install",
-    "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
-    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
+    "db:create": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:create",
+    "db:drop": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:drop -d src/orm/orm.config.ts",
+    "seed": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed -d src/orm/orm.config.ts",
     "schema:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop",
     "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync"
   },
@@ -35,8 +36,7 @@
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.10",
-    "typeorm-extension": "^2.5.4",
-    "typeorm-seeding": "^1.6.1"
+    "typeorm-extension": "^2.5.4"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",

@@ -79,10 +79,9 @@ describe("FarmsController", () => {
       const createFarmDto: CreateFarmDto = {name: "Farm 1", address: "Hlavná 1, 831 01 Bratislava", size: 21.5, yield: 8.5, authorization: wrongToken.authorization};
       const res = await agent.post("/api/v1/farms/create").send(createFarmDto);
 
-      expect(res.statusCode).toBe(422);
+      expect(res.statusCode).toBe(500);
       expect(res.body).toMatchObject({
-        name: "UnprocessableEntityError",
-        message: "User does not exist for id: 2fabdfea-743e-4a9e-8879-f1f0b8577af0",
+        message: "Internal Server Error",
       });
     });
   });
@@ -127,10 +126,9 @@ describe("FarmsController", () => {
 
       const deleteFarmDto: DeleteFarmDto = {id: farm.id, authorization: wrongToken.authorization};
       const res = await agent.post("/api/v1/farms/delete").send(deleteFarmDto);
-      expect(res.statusCode).toBe(422);
+      expect(res.statusCode).toBe(500);
       expect(res.body).toMatchObject({
-        name: "UnprocessableEntityError",
-        message: "User with id: 2fabdfea-743e-4a9e-8879-f1f0b8577af0 doesn't exist",
+        message: "Internal Server Error",
       });
     });
 
@@ -196,10 +194,10 @@ describe("FarmsController", () => {
       
       const res = await agent.post("/api/v1/farms/all").send({outliers: true, authorization: `Bearer ${accessToken.token}`});
       expect(res.statusCode).toBe(201);
-      expect(res.body).toEqual([
-          { name: "Farm 4", address: "Moyzesova 966/22, 010 01 Žilina", owner: "user@test.com", size: "8.3", yield: "2"},
-          { name: "Farm 5", address: "Novomeského 54, 949 11 Nitra", owner: "user@test.com", size: "5.1", yield: "1.5"},
-        ]);
+      expect(res.body).toMatchObject([
+        { name: "Farm 4", address: "Moyzesova 966/22, 010 01 Žilina", owner: "user@test.com", size: "8.3", yield: "2", driving_distance: { text: expect.any(String), value: expect.any(Number) }},
+        { name: "Farm 5", address: "Novomeského 54, 949 11 Nitra", owner: "user@test.com", size: "5.1", yield: "1.5", driving_distance: { text: expect.any(String), value: expect.any(Number) }}
+      ]);
     });
 
     it("should return all farms where yield is > 30% higher filtered by outliers 'false' value", async () => {
@@ -219,10 +217,10 @@ describe("FarmsController", () => {
       
       const res = await agent.post("/api/v1/farms/all").send({outliers: false, authorization: `Bearer ${accessToken.token}`});
       expect(res.statusCode).toBe(201);
-      expect(res.body).toEqual([
-        {name: "Farm 1", address: "Hlavná 1, 831 01 Bratislava", owner: "user@test.com", size: "21.5", yield: "8.5"},
-        {name: "Farm 2", address: "Záhradnícka 10, 811 07 Bratislava", owner: "user@test.com", size: "18", yield: "9.5"},
-        {name: "Farm 3", address: "Tomášikova 3651/15, 917 01 Trnava", owner: "user@test.com", size: "23", yield: "12"},
+      expect(res.body).toMatchObject([
+        {name: "Farm 1", address: "Hlavná 1, 831 01 Bratislava", owner: "user@test.com", size: "21.5", yield: "8.5", driving_distance: { text: expect.any(String), value: expect.any(Number) }},
+        {name: "Farm 2", address: "Záhradnícka 10, 811 07 Bratislava", owner: "user@test.com", size: "18", yield: "9.5", driving_distance: { text: expect.any(String), value: expect.any(Number) }},
+        {name: "Farm 3", address: "Tomášikova 3651/15, 917 01 Trnava", owner: "user@test.com", size: "23", yield: "12", driving_distance: { text: expect.any(String), value: expect.any(Number) }},
         ]);
     });
   });

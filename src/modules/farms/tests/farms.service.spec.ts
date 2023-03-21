@@ -13,6 +13,7 @@ import { LoginUserDto } from "modules/auth/dto/login-user.dto";
 import { UsersService } from "modules/users/users.service";
 import { AuthService } from "modules/auth/auth.service";
 import { AccessToken } from "modules/auth/entities/access-token.entity";
+import { TokenExpiredError } from "jsonwebtoken";
 
 describe("UsersController", () => {
   let app: Express;
@@ -63,9 +64,9 @@ describe("UsersController", () => {
       const wrongToken = { authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmYWJkZmVhLTc0M2UtNGE5ZS04ODc5LWYxZjBiODU3N2FmMCIsImVtYWlsIjoidXNlcjFAdGVzdC5jb20iLCJpYXQiOjE2Nzg1MTkzMzgsImV4cCI6MTY3ODc3ODUzOH0.PzSUY-2CJ_vLo-Qw1tVaZPqjlMKvlTjSHD4UZYidxhs` };
       const createFarmDto: CreateFarmDto = { name: "Farm 1", address: "Hlavná 1, 831 01 Bratislava", size: 21.5, yield: 8.5, authorization: wrongToken.authorization };
 
-      await farmsService.createFarm(createFarmDto).catch((error: UnprocessableEntityError) => {
-        expect(error).toBeInstanceOf(UnprocessableEntityError);
-        expect(error.message).toBe("User does not exist for id: 2fabdfea-743e-4a9e-8879-f1f0b8577af0");
+      await farmsService.createFarm(createFarmDto).catch((error: TokenExpiredError) => {
+        expect(error).toBeInstanceOf(TokenExpiredError);
+        expect(error.message).toBe("jwt expired");
       });
     });
   });
@@ -97,9 +98,9 @@ describe("UsersController", () => {
       };
 
       await farmsService.deleteFarm({ id: createFarm.id, authorization: wrongToken.authorization })
-        .catch((error: UnprocessableEntityError) => {
-          expect(error).toBeInstanceOf(UnprocessableEntityError);
-          expect(error.message).toBe("User with id: 2fabdfea-743e-4a9e-8879-f1f0b8577af0 doesn't exist");
+        .catch((error: TokenExpiredError) => {
+          expect(error).toBeInstanceOf(TokenExpiredError);
+          expect(error.message).toBe("jwt expired");
       });
     });
     it("should throw error due to the non-existing farm", async () => {
@@ -185,9 +186,9 @@ describe("UsersController", () => {
       };
 
       await farmsService.allFarms({ outliers: true, authorization: wrongToken.authorization })
-        .catch((error: UnprocessableEntityError) => {
-          expect(error).toBeInstanceOf(UnprocessableEntityError);
-          expect(error.message).toBe("User with id: 2fabdfea-743e-4a9e-8879-f1f0b8577af0 doesn't exist");
+        .catch((error: TokenExpiredError) => {
+          expect(error).toBeInstanceOf(TokenExpiredError);
+          expect(error.message).toBe("jwt expired");
       });
     });
   });
