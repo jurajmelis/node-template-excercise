@@ -195,8 +195,8 @@ describe("FarmsController", () => {
       const res = await agent.post("/api/v1/farms/all").send({outliers: true, authorization: `Bearer ${accessToken.token}`});
       expect(res.statusCode).toBe(201);
       expect(res.body).toMatchObject([
-        { name: "Farm 4", address: "Moyzesova 966/22, 010 01 Žilina", owner: "user@test.com", size: "8.3", yield: "2", driving_distance: expect.any(Object)},
-        { name: "Farm 5", address: "Novomeského 54, 949 11 Nitra", owner: "user@test.com", size: "5.1", yield: "1.5",driving_distance: expect.any(Object)}
+        { name: "Farm 4", address: "Moyzesova 966/22, 010 01 Žilina", owner: "user@test.com", size: "8.3", yield: "2", driving_distance: { text: expect.any(String), value: expect.any(Number) }},
+        { name: "Farm 5", address: "Novomeského 54, 949 11 Nitra", owner: "user@test.com", size: "5.1", yield: "1.5", driving_distance: { text: expect.any(String), value: expect.any(Number) }}
       ]);
     });
 
@@ -218,9 +218,9 @@ describe("FarmsController", () => {
       const res = await agent.post("/api/v1/farms/all").send({outliers: false, authorization: `Bearer ${accessToken.token}`});
       expect(res.statusCode).toBe(201);
       expect(res.body).toMatchObject([
-        {name: "Farm 1", address: "Hlavná 1, 831 01 Bratislava", owner: "user@test.com", size: "21.5", yield: "8.5", driving_distance: expect.any(Object)},
-        {name: "Farm 2", address: "Záhradnícka 10, 811 07 Bratislava", owner: "user@test.com", size: "18", yield: "9.5", driving_distance: expect.any(Object)},
-        {name: "Farm 3", address: "Tomášikova 3651/15, 917 01 Trnava", owner: "user@test.com", size: "23", yield: "12", driving_distance: expect.any(Object)},
+        {name: "Farm 1", address: "Hlavná 1, 831 01 Bratislava", owner: "user@test.com", size: "21.5", yield: "8.5", driving_distance: { text: expect.any(String), value: expect.any(Number) }},
+        {name: "Farm 2", address: "Záhradnícka 10, 811 07 Bratislava", owner: "user@test.com", size: "18", yield: "9.5", driving_distance: { text: expect.any(String), value: expect.any(Number) }},
+        {name: "Farm 3", address: "Tomášikova 3651/15, 917 01 Trnava", owner: "user@test.com", size: "23", yield: "12", driving_distance: { text: expect.any(String), value: expect.any(Number) }},
         ]);
     });
   });
