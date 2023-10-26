@@ -1,12 +1,4 @@
-# recruitment-node-private 1.2.0
-
-This task is to implement a “feature” **based on the current setup**. Is not really about show off, but about deliver a solid piece of work.<br/>
-We will look into the whole code and how the current setup is used, not just if it is working or not.<br/>
-If you disagree on conventions used by the setup. Please comment on them, instead of changing the given setup.
-
-Please make sure to provide all data needed to start the app.
-
-Good luck!
+# node-template-excercise private 1.2.0
 
 ## Installation
 
